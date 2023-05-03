@@ -7,7 +7,6 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
-window.onSearch = onSearch
 window.onGo = onGo
 window.onDelete = onDelete
 window.renderLocs = renderLocs
@@ -46,6 +45,7 @@ function onGetLocs() {
 function onGetUserPos() {
   getPosition()
     .then(pos => {
+        mapService.panTo(pos.coords.latitude, pos.coords.longitude)
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
@@ -60,8 +60,6 @@ function onPanTo() {
   console.log('Panning the Map')
   mapService.panTo(35.6895, 139.6917)
 }
-
-function onSearch(search) {}
 
 function renderLocs() {
   locService.getLocs().then(locs => {
