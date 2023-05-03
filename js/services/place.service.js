@@ -10,12 +10,15 @@ export const placeService = {
 
 const PLACE_KEY = 'placesDB'
 
-function getPlaces(){
-    return storageService.query(PLACE_KEY)
+function getPlaces() {
+    return storageService.query(PLACE_KEY).then(places => {
+        if (!places.length) places = _createDemo()
+        return places
+    })
 }
 
 function createNewPlace(name, lat, lng) {
-    
+
     const newPlace = {
         name,
         lat,
@@ -39,4 +42,21 @@ function savePlace(place) {
     } else {
         return storageService.post(PLACE_KEY, place)
     }
+}
+
+function _createDemo() {
+    return [{
+        id: _makeId(),
+        name: 'Tel Aviv',
+        lat: 32.082,
+        lng: 34.780,
+    }]
+}
+function _makeId(length = 5) {
+    var txt = ''
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+    return txt
 }
