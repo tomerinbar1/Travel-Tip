@@ -59,13 +59,6 @@ function onPanTo() {
 
 
 
-function onGoToPlace(placeId) {
-    placeService.getPlace(placeId).then(place => initMap(place.lat, place.lng))
-}
-
-function onDeletePlace(placeId) {
-    placeService.removePlace(placeId)
-}
 
 
 function onSearch(search) {
