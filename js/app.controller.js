@@ -53,6 +53,8 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
 
-function onSearch(search){
+function onSearch(search){}
+
+function onLatLong(){
     
 }
