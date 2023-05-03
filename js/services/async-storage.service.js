@@ -6,7 +6,8 @@ export const storageService = {
     query,  // List
 }
 
-import { utils } from './utils.service.js'
+import { utils } from './utils.js'
+
 
 function post(entityType, newEntity) {
     newEntity = JSON.parse(JSON.stringify(newEntity))
