@@ -1,4 +1,5 @@
 import { locService } from './services/loc.service.js'
+import { placeService } from './services/place.service.js'
 import { mapService } from './services/map.service.js'
 
 window.onload = onInit
@@ -12,12 +13,13 @@ window.onDelete = onDelete
 window.renderLocs = renderLocs
 
 function onInit() {
-  mapService
-    .initMap()
-    .then(() => {
-      console.log('Map is ready')
-    })
-    .catch(() => console.log('Error: cannot init map'))
+    mapService.initMap()
+        .then(() => {
+            console.log('Map is ready')
+        })
+        .catch(() => console.log('Error: cannot init map'))
+
+    placeService.getPlaces().then(places => console.log(places))
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
