@@ -3,7 +3,10 @@ export const mapService = {
   addMarker,
   panTo,
   getLatLong,
+  deleteLoc,
 }
+
+import { locService } from '../services/loc.service.js'
 
 // Var that is used throughout this Module (not global)
 var gMap
@@ -34,9 +37,19 @@ function panTo(lat, lng) {
   gMap.panTo(laLatLng)
 }
 
+function deleteLoc(placeId) {
+    locService.getLocs().then(locs => {
+    locs.forEach((loc) => {
+        console.log('loc', loc);
+        const idx = locs.findIndex(loc => loc.id === placeId)
+        locs.splice(idx, 1)
+    })
+  })
+}
+
 function _connectGoogleApi() {
   if (window.google) return Promise.resolve()
-  const API_KEY = 'AIzaSyC5npTxFk7UL7btXdc70lyEfjwH8Mhet5g' //TODO: Enter your API Key
+  const API_KEY = 'AIzaSyC5npTxFk7UL7btXdc70lyEfjwH8Mhet5g'
   var elGoogleApi = document.createElement('script')
   elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
   elGoogleApi.async = true
