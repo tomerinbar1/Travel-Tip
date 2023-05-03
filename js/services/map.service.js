@@ -1,9 +1,11 @@
 export const mapService = {
-    initMap,
-    addMarker,
-    panTo,
-    getLatLng
+  initMap,
+  addMarker,
+  panTo,
+  deleteLoc,
 }
+
+import { locService } from '../services/loc.service.js'
 
 // Var that is used throughout this Module (not global)
 var gMap
@@ -33,13 +35,23 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 }
 
+function deleteLoc(placeId) {
+    locService.getLocs().then(locs => {
+    locs.forEach((loc) => {
+        console.log('loc', loc);
+        const idx = locs.findIndex(loc => loc.id === placeId)
+        locs.splice(idx, 1)
+    })
+  })
+}
+
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyC5npTxFk7UL7btXdc70lyEfjwH8Mhet5g'
-    var elGoogleApi = document.createElement('script')
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
-    elGoogleApi.async = true
-    document.body.append(elGoogleApi)
+  if (window.google) return Promise.resolve()
+  const API_KEY = 'AIzaSyC5npTxFk7UL7btXdc70lyEfjwH8Mhet5g'
+  var elGoogleApi = document.createElement('script')
+  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
+  elGoogleApi.async = true
+  document.body.append(elGoogleApi)
 
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve
@@ -70,6 +82,15 @@ function getLatLng() {
     })
 }
 
+
+function _createDemo() {
+    return [{
+        id: utils.makeId(),
+        name: 'Tel Aviv',
+        lat: 32.082,
+        lng: 34.780,
+    }]
+}
 
 // function onGoToPlace(placeId) {
 //     placeService.getPlace(placeId).then(place => initMap(place.lat, place.lng))
